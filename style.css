@@ -1,3 +1,7 @@
+* {
+  font-family: "Sedgwick Ave Display";
+}
+
 canvas {
   position: fixed;
   top: 0;
@@ -5,7 +9,33 @@ canvas {
   width: 100% !important;
 }
 
-#lilteccavideo {
+.infoBlock {
   z-index: 1;
-  position: absolute;
+  position: relative;
+}
+
+#infoText {
+  font-size: 400%;
+  text-align: center;
+}
+
+.playNavigation {
+  z-index: 1;
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+}
+
+.playNavigationText {
+  font-size: 250%;
+  color: yellow;
+  margin-right: 5%;
+  margin-left: 5%;
+  display: inline-block;
+}
+
+.playNavigationText:hover {
+  color: blue;
+  cursor: pointer;
 }
