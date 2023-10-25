@@ -1,0 +1,11 @@
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+}
+
+#lilteccavideo {
+  z-index: 1;
+  position: absolute;
+}
