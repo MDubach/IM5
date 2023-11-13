@@ -174,6 +174,16 @@ function lilteccaAdd() {
   scene.add(sphere01, sphere02, sphere03, sphere04, sphere05, sphere06);
 }
 
+function travisAdd() {
+  scene.remove(lilteccaSphere, yeatTorus);
+  scene.add(iconsahedron01, iconsahedron02, iconsahedron03, iconsahedron04, iconsahedron05, iconsahedron06);
+}
+
+function yeatAdd() {
+  scene.remove(lilteccaSphere, travisIcosahedron);
+  scene.add(torus01, torus02, torus03, torus04, torus05, torus06);
+}
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -222,6 +232,7 @@ const playButton = document.getElementById("playButton");
 const nextVideoButton = document.getElementById("nextVideoButton");
 
 resetButton.addEventListener("click", function() {
+  resetScene();
   lilteccaVideo.load();
   yeatVideo.load();
   travisVideo.load();
@@ -285,10 +296,12 @@ function playOrStopVideo() {
     } else if (selectedMesh.name == 'yeatTorus') {
       document.getElementById('infoText').innerHTML = yeatTorus.videoname;
       yeatVideo.play();
+      yeatAdd();
       yeatAnimate();
     } else if (selectedMesh.name == 'travisIcosahedron') {
       document.getElementById('infoText').innerHTML = travisIcosahedron.videoname;
       travisVideo.play();
+      travisAdd();
       travisAnimate();
     }
   

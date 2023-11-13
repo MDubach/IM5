@@ -35,7 +35,37 @@ canvas {
   display: inline-block;
 }
 
+#lilteccavideo {
+  display: none;
+}
+
+#yeatvideo {
+  display: none;
+}
+
+#travisvideo {
+  display: none;
+}
+
 .playNavigationText:hover {
   color: blue;
   cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .playNavigationText {
+    font-size: 200%;
+  }
+  #infoText {
+    font-size: 200%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .playNavigationText {
+    font-size: 150%;
+  }
+  #infoText {
+    font-size: 150%;
+  }
 }
