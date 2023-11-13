@@ -68,6 +68,44 @@ scene.add(travisIcosahedron);
 // selected mesh and song
 let selectedMesh = lilteccaSphere;
 
+// sphere, torus and iconsahedron for musicvideos
+const sphere01 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+const sphere02 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+const sphere03 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+const sphere04 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+const sphere05 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+const sphere06 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+sphere01.position.set(0,40,0);
+sphere02.position.set(0,0,40);
+sphere03.position.set(0,0,-40);
+sphere04.position.set(0,-40,0);
+sphere05.position.set(40,0,0);
+sphere06.position.set(-40,0,0);
+const torus01 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+const torus02 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+const torus03 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+const torus04 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+const torus05 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+const torus06 = new THREE.Mesh(yeatGeometry, yeatMaterial);
+torus01.position.set(0,40,0);
+torus02.position.set(0,0,40);
+torus03.position.set(0,0,-40);
+torus04.position.set(0,-40,0);
+torus05.position.set(40,0,0);
+torus06.position.set(-40,0,0);
+const iconsahedron01 = new THREE.Mesh(travisGeometry, travisMaterial);
+const iconsahedron02 = new THREE.Mesh(travisGeometry, travisMaterial);
+const iconsahedron03 = new THREE.Mesh(travisGeometry, travisMaterial);
+const iconsahedron04 = new THREE.Mesh(travisGeometry, travisMaterial);
+const iconsahedron05 = new THREE.Mesh(travisGeometry, travisMaterial);
+const iconsahedron06 = new THREE.Mesh(travisGeometry, travisMaterial);
+iconsahedron01.position.set(0,40,0);
+iconsahedron02.position.set(0,0,40);
+iconsahedron03.position.set(0,0,-40);
+iconsahedron04.position.set(0,-40,0);
+iconsahedron05.position.set(40,0,0);
+iconsahedron06.position.set(-40,0,0);
+
 // song is playing boolean
 let isPlaying = false;
 
@@ -127,52 +165,55 @@ window.addEventListener('click', onMouseClick);
 
 
 function onMeshClick(mesh) {
-
-  if (mesh.name == 'lilteccaSphere') {
-    document.getElementById('infoText').innerHTML = lilteccaSphere.videoname;
-    selectedMesh = lilteccaSphere;
-    scene.background = lilteccaTexture;
-  } else if (mesh.name == 'yeatTorus') {
-    document.getElementById('infoText').innerHTML = yeatTorus.videoname;
-    selectedMesh = yeatTorus;
-    scene.background = yeatTexture;
-  } else if (mesh.name == 'travisIcosahedron') {
-    document.getElementById('infoText').innerHTML = travisIcosahedron.videoname;
-    selectedMesh = travisIcosahedron;
-    scene.background = travisTexture;
-  }
-
-  lilteccaVideo.pause();
-  yeatVideo.pause();
-  travisVideo.pause();
-
-  isPlaying = false;
-  playButton.innerHTML = "play";
-
-  // Perform your actions when a mesh is clicked
   console.log(`Mesh clicked: ${mesh.name}`);
+}
+
+function lilteccaAdd() {
+  scene.remove(yeatTorus, travisIcosahedron);
+  //const sphere05 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
+  scene.add(sphere01, sphere02, sphere03, sphere04, sphere05, sphere06);
 }
 
 function animate() {
   requestAnimationFrame(animate);
 
-  /*lilteccaSphere.rotation.x += 0.001;
+  lilteccaSphere.rotation.x += 0.001;
   lilteccaSphere.rotation.y += 0.008;
   lilteccaSphere.rotation.z += 0.002;
 
   yeatTorus.rotation.x += 0.01;
   yeatTorus.rotation.y += 0.005;
-  yeatTorus.rotation.z += 0.01;*/
+  yeatTorus.rotation.z += 0.01;
 
-
+  travisIcosahedron.rotation.x += 0.01;
+  travisIcosahedron.rotation.y += 0.005;
+  travisIcosahedron.rotation.z += 0.001;
 
   controls.update();
+  renderer.render(scene, camera);
+}
 
+animate();
+
+function lilteccaAnimate() {
+  requestAnimationFrame(lilteccaAnimate);
+  controls.update();
   renderer.render(scene, camera);
 
 }
 
-animate();
+function yeatAnimate() {
+  requestAnimationFrame(yeatAnimate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+function travisAnimate() {
+  requestAnimationFrame(travisAnimate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
 
 
 // playsettings controllers
@@ -193,11 +234,41 @@ playButton.addEventListener("click", function() {
 
 nextVideoButton.addEventListener("click", function() {
 
-  console.log("hdlkafjsdlfkjasdlkf");
+  lilteccaVideo.pause();
+  yeatVideo.pause();
+  travisVideo.pause();
 
+  resetScene();
+
+  if (selectedMesh == lilteccaSphere) {
+    document.getElementById('infoText').innerHTML = travisIcosahedron.videoname;
+    selectedMesh = travisIcosahedron;
+    scene.background = travisTexture;
+  } else if (selectedMesh == travisIcosahedron) {
+    document.getElementById('infoText').innerHTML = yeatTorus.videoname;
+    selectedMesh = yeatTorus;
+    scene.background = yeatTexture;
+  } else if (selectedMesh == yeatTorus) {
+    document.getElementById('infoText').innerHTML = lilteccaSphere.videoname;
+    selectedMesh = lilteccaSphere;
+    scene.background = lilteccaTexture;
+  }
+
+  isPlaying = false;
+  playButton.innerHTML = "play";
 });
 
+function resetScene() {
+  scene.remove(travisIcosahedron, yeatTorus, lilteccaSphere);
+  scene.add(travisIcosahedron, yeatTorus, lilteccaSphere);
+  scene.remove(sphere01, sphere02, sphere03, sphere04, sphere05, sphere06);
+  scene.remove(torus01, torus02, torus03, torus04, torus05, torus06);
+  scene.remove(iconsahedron01, iconsahedron02, iconsahedron03, iconsahedron04, iconsahedron05, iconsahedron06);
+}
+
 function playOrStopVideo() {
+
+  animate();
 
   if (isPlaying) {
     lilteccaVideo.pause();
@@ -209,12 +280,16 @@ function playOrStopVideo() {
     if (selectedMesh.name == 'lilteccaSphere') {
       document.getElementById('infoText').innerHTML = lilteccaSphere.videoname;
       lilteccaVideo.play();
+      lilteccaAdd();
+      lilteccaAnimate();
     } else if (selectedMesh.name == 'yeatTorus') {
       document.getElementById('infoText').innerHTML = yeatTorus.videoname;
       yeatVideo.play();
+      yeatAnimate();
     } else if (selectedMesh.name == 'travisIcosahedron') {
       document.getElementById('infoText').innerHTML = travisIcosahedron.videoname;
       travisVideo.play();
+      travisAnimate();
     }
   
     isPlaying = true;
