@@ -87,24 +87,24 @@ const torus03 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus04 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus05 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus06 = new THREE.Mesh(yeatGeometry, yeatMaterial);
-torus01.position.set(0,40,0);
-torus02.position.set(0,0,40);
-torus03.position.set(0,0,-40);
-torus04.position.set(0,-40,0);
-torus05.position.set(40,0,0);
-torus06.position.set(-40,0,0);
+torus01.position.set(-30,40,0);
+torus02.position.set(-30,0,40);
+torus03.position.set(-30,0,-40);
+torus04.position.set(-30,-40,0);
+torus05.position.set(10,0,0);
+torus06.position.set(-70,0,0);
 const iconsahedron01 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron02 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron03 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron04 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron05 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron06 = new THREE.Mesh(travisGeometry, travisMaterial);
-iconsahedron01.position.set(0,40,0);
-iconsahedron02.position.set(0,0,40);
-iconsahedron03.position.set(0,0,-40);
-iconsahedron04.position.set(0,-40,0);
-iconsahedron05.position.set(40,0,0);
-iconsahedron06.position.set(-40,0,0);
+iconsahedron01.position.set(30,40,0);
+iconsahedron02.position.set(30,0,40);
+iconsahedron03.position.set(30,0,-40);
+iconsahedron04.position.set(30,-40,0);
+iconsahedron05.position.set(70,0,0);
+iconsahedron06.position.set(-10,0,0);
 
 // song is playing boolean
 let isPlaying = false;
@@ -135,7 +135,6 @@ document.body.onkeyup = function(e) {
     playOrStopVideo();
   }
 }
-
 
 // raycaster
 const raycaster = new THREE.Raycaster();
