@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // create scene
@@ -16,15 +15,21 @@ const renderer = new THREE.WebGL1Renderer({
 // renderer settings
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerHeight, window.innerHeight);
+
+// set camera position and render scene
 camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // add light and grid helper to scene
 const ambientLight = new THREE.AmbientLight(0xffffff);
-const gridHelper = new THREE.GridHelper(200,50);
-scene.add(ambientLight, gridHelper);
+// const gridHelper = new THREE.GridHelper(200,50);
+// scene.add(ambientLight, gridHelper);
+scene.add(ambientLight);
 
-// liltecca video einbindung
+// Orbitcontrols for movement
+const controls = new OrbitControls(camera, renderer.domElement);
+
+// liltecca video setup
 const lilteccaGeometry = new THREE.SphereGeometry(13,32,32);
 const lilteccaVideo = document.getElementById("lilteccavideo");
 const lilteccaTexture = new THREE.VideoTexture(lilteccaVideo);
@@ -32,13 +37,12 @@ const lilteccaMaterial = new THREE.MeshBasicMaterial({ map: lilteccaTexture });
 const lilteccaSphere = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 lilteccaSphere.name = "lilteccaSphere";
 lilteccaSphere.videoname = "Lil Tecca - 500lbs";
-console.log(lilteccaSphere);
 
 // add liltecca video to scene
 scene.background = lilteccaTexture;
 scene.add(lilteccaSphere);
 
-// yeat video einbindung
+// yeat video setup
 const yeatGeometry = new THREE.DodecahedronGeometry(13,0);
 const yeatVideo = document.getElementById("yeatvideo");
 const yeatTexture = new THREE.VideoTexture(yeatVideo);
@@ -51,8 +55,7 @@ yeatTorus.videoname = "Yeat - bigger then everything";
 // add yeat video to scene
 scene.add(yeatTorus);
 
-
-// travis video einbindung
+// travis video setup
 const travisGeometry = new THREE.IcosahedronGeometry(13,0);
 const travisVideo = document.getElementById("travisvideo");
 const travisTexture = new THREE.VideoTexture(travisVideo);
@@ -65,10 +68,7 @@ travisIcosahedron.videoname = "Travis Scott - Escape Plan";
 // add travis video to scene
 scene.add(travisIcosahedron);
 
-// selected mesh and song
-let selectedMesh = lilteccaSphere;
-
-// sphere, torus and iconsahedron for musicvideos
+// create sphere, torus and iconsahedron for musicvideos
 const sphere01 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 const sphere02 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 const sphere03 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
@@ -106,14 +106,14 @@ iconsahedron04.position.set(30,-40,0);
 iconsahedron05.position.set(70,0,0);
 iconsahedron06.position.set(-10,0,0);
 
+// selected mesh and song
+let selectedMesh = lilteccaSphere;
+
 // song is playing boolean
 let isPlaying = false;
 
-// Orbitcontrols for movement
-const controls = new OrbitControls(camera, renderer.domElement);
-
-// add stars to scene
-function addStar() {
+// add sphere to scene
+function addSphere() {
     const geometry = new THREE.SphereGeometry(0.2, 24, 24);
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const star = new THREE.Mesh( geometry, material );
@@ -124,7 +124,8 @@ function addStar() {
     scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+// add 200 spheres to scene
+Array(200).fill().forEach(addSphere);
 
 // spacebar pause and play
 document.body.onkeyup = function(e) {
@@ -140,6 +141,7 @@ document.body.onkeyup = function(e) {
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
+// onMouseClick Event
 function onMouseClick(event) {
   // Calculate mouse position in normalized device coordinates
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -156,33 +158,32 @@ function onMouseClick(event) {
 
   if (intersects.length > 0) {
     const clickedMesh = intersects[0].object;
-    onMeshClick(clickedMesh); // Call your custom function when a mesh is clicked
+    // could add function to change stuff on website based onmouseclickevent.
+    console.log(`Mesh clicked: ${clickedMesh.name}`);
   }
 }
 
 window.addEventListener('click', onMouseClick);
 
-
-function onMeshClick(mesh) {
-  console.log(`Mesh clicked: ${mesh.name}`);
-}
-
+// add liltecca 3d Objects
 function lilteccaAdd() {
   scene.remove(yeatTorus, travisIcosahedron);
-  //const sphere05 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
   scene.add(sphere01, sphere02, sphere03, sphere04, sphere05, sphere06);
 }
 
+// add travis 3d Objects
 function travisAdd() {
   scene.remove(lilteccaSphere, yeatTorus);
   scene.add(iconsahedron01, iconsahedron02, iconsahedron03, iconsahedron04, iconsahedron05, iconsahedron06);
 }
 
+// add yeat 3d Objects
 function yeatAdd() {
   scene.remove(lilteccaSphere, travisIcosahedron);
   scene.add(torus01, torus02, torus03, torus04, torus05, torus06);
 }
 
+// animate movement for 3d objects
 function animate() {
   requestAnimationFrame(animate);
 
@@ -204,51 +205,157 @@ function animate() {
 
 animate();
 
+
+let countAnimate = 0;
+
+let lilteccaAnimationRequest;
 function lilteccaAnimate() {
-  requestAnimationFrame(lilteccaAnimate);
+  lilteccaAnimationRequest = requestAnimationFrame(lilteccaAnimate);
+
+  sphere01.position.y += 0.05;
+  sphere02.position.z += 0.05;
+  sphere03.position.z -= 0.05;
+  sphere04.position.y -= 0.05;
+  sphere05.position.x += 0.05;
+  sphere06.position.x -= 0.05;
+
   controls.update();
   renderer.render(scene, camera);
-
 }
 
+let yeatAnimationRequest;
 function yeatAnimate() {
-  requestAnimationFrame(yeatAnimate);
+  yeatAnimationRequest = requestAnimationFrame(yeatAnimate);
+
+  countAnimate ++;
+  console.log(countAnimate);
+
+  if(countAnimate > 1000) {
+    countAnimate = 0;
+  } else if (countAnimate > 500) {
+    torus01.position.y += 0.5;
+    torus02.position.z += 0.5;
+    torus03.position.z -= 0.5;
+    torus04.position.y -= 0.5;
+    torus05.position.x += 0.5;
+    torus06.position.x -= 0.5;
+
+    torus01.scale.x += 0.01;
+    torus01.scale.z += 0.01;
+    torus01.scale.y += 0.01;
+    torus02.scale.x += 0.01;
+    torus02.scale.z += 0.01;
+    torus02.scale.y += 0.01;
+    torus03.scale.x += 0.01;
+    torus03.scale.z += 0.01;
+    torus03.scale.y += 0.01;
+    torus04.scale.x += 0.01;
+    torus04.scale.z += 0.01;
+    torus04.scale.y += 0.01;
+    torus05.scale.x += 0.01;
+    torus05.scale.z += 0.01;
+    torus05.scale.y += 0.01;
+    torus06.scale.x += 0.01;
+    torus06.scale.z += 0.01;
+    torus06.scale.y += 0.01;
+
+    torus01.rotation.y += 0.05;
+    torus02.rotation.z += 0.05;
+    torus03.rotation.z -= 0.05;
+    torus04.rotation.y -= 0.05;
+    torus05.rotation.x += 0.05;
+    torus06.rotation.x -= 0.05;
+
+  } else {
+
+    torus01.position.y -= 0.5;
+    torus02.position.z -= 0.5;
+    torus03.position.z += 0.5;
+    torus04.position.y += 0.5;
+    torus05.position.x -= 0.5;
+    torus06.position.x += 0.5;
+
+    torus01.scale.x -= 0.01;
+    torus01.scale.z -= 0.01;
+    torus01.scale.y -= 0.01;
+    torus02.scale.x -= 0.01;
+    torus02.scale.z -= 0.01;
+    torus02.scale.y -= 0.01;
+    torus03.scale.x -= 0.01;
+    torus03.scale.z -= 0.01;
+    torus03.scale.y -= 0.01;
+    torus04.scale.x -= 0.01;
+    torus04.scale.z -= 0.01;
+    torus04.scale.y -= 0.01;
+    torus05.scale.x -= 0.01;
+    torus05.scale.z -= 0.01;
+    torus05.scale.y -= 0.01;
+    torus06.scale.x -= 0.01;
+    torus06.scale.z -= 0.01;
+    torus06.scale.y -= 0.01;
+
+    torus01.rotation.y -= 0.05;
+    torus02.rotation.z -= 0.05;
+    torus03.rotation.z += 0.05;
+    torus04.rotation.y += 0.05;
+    torus05.rotation.x -= 0.05;
+    torus06.rotation.x += 0.05;
+
+  }
+
   controls.update();
   renderer.render(scene, camera);
 }
 
+let travisAnimationRequest;
 function travisAnimate() {
-  requestAnimationFrame(travisAnimate);
+  travisAnimationRequest = requestAnimationFrame(travisAnimate);
+
+  iconsahedron01.rotation.y += 0.05;
+  iconsahedron02.rotation.z += 0.05;
+  iconsahedron03.rotation.z -= 0.05;
+  iconsahedron04.rotation.y -= 0.05;
+  iconsahedron05.rotation.x += 0.05;
+  iconsahedron06.rotation.x -= 0.05;
+
+  iconsahedron01.position.y += 0.01;
+  iconsahedron02.position.z += 0.01;
+  iconsahedron03.position.z -= 0.01;
+  iconsahedron04.position.y -= 0.01;
+  iconsahedron05.position.x += 0.01;
+  iconsahedron06.position.x -= 0.01;
+
   controls.update();
   renderer.render(scene, camera);
 }
 
-
-
-// playsettings controllers
+// play settings buttons
 const resetButton = document.getElementById("resetButton");
 const playButton = document.getElementById("playButton");
 const nextVideoButton = document.getElementById("nextVideoButton");
 
+// reset all videos and scene
 resetButton.addEventListener("click", function() {
   resetScene();
+  cancelAnimationFunctions();
   lilteccaVideo.load();
   yeatVideo.load();
   travisVideo.load();
-
 });
 
+// playbutton play and stop video
 playButton.addEventListener("click", function() {
   playOrStopVideo();
 });
 
+// show next video and reset scene
 nextVideoButton.addEventListener("click", function() {
 
   lilteccaVideo.pause();
   yeatVideo.pause();
   travisVideo.pause();
-
   resetScene();
+  cancelAnimationFunctions();
 
   if (selectedMesh == lilteccaSphere) {
     document.getElementById('infoText').innerHTML = travisIcosahedron.videoname;
@@ -268,6 +375,14 @@ nextVideoButton.addEventListener("click", function() {
   playButton.innerHTML = "play";
 });
 
+// cancel animation functions
+function cancelAnimationFunctions () {
+  cancelAnimationFrame(lilteccaAnimationRequest);
+  cancelAnimationFrame(travisAnimationRequest);
+  cancelAnimationFrame(yeatAnimationRequest);
+}
+
+// reset scene
 function resetScene() {
   scene.remove(travisIcosahedron, yeatTorus, lilteccaSphere);
   scene.add(travisIcosahedron, yeatTorus, lilteccaSphere);
@@ -276,6 +391,7 @@ function resetScene() {
   scene.remove(iconsahedron01, iconsahedron02, iconsahedron03, iconsahedron04, iconsahedron05, iconsahedron06);
 }
 
+// play or stop video
 function playOrStopVideo() {
 
   animate();
