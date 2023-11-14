@@ -75,36 +75,44 @@ const sphere03 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 const sphere04 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 const sphere05 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
 const sphere06 = new THREE.Mesh(lilteccaGeometry, lilteccaMaterial);
-sphere01.position.set(0,40,0);
-sphere02.position.set(0,0,40);
-sphere03.position.set(0,0,-40);
-sphere04.position.set(0,-40,0);
-sphere05.position.set(40,0,0);
-sphere06.position.set(-40,0,0);
 const torus01 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus02 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus03 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus04 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus05 = new THREE.Mesh(yeatGeometry, yeatMaterial);
 const torus06 = new THREE.Mesh(yeatGeometry, yeatMaterial);
-torus01.position.set(-30,40,0);
-torus02.position.set(-30,0,40);
-torus03.position.set(-30,0,-40);
-torus04.position.set(-30,-40,0);
-torus05.position.set(10,0,0);
-torus06.position.set(-70,0,0);
 const iconsahedron01 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron02 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron03 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron04 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron05 = new THREE.Mesh(travisGeometry, travisMaterial);
 const iconsahedron06 = new THREE.Mesh(travisGeometry, travisMaterial);
-iconsahedron01.position.set(30,40,0);
-iconsahedron02.position.set(30,0,40);
-iconsahedron03.position.set(30,0,-40);
-iconsahedron04.position.set(30,-40,0);
-iconsahedron05.position.set(70,0,0);
-iconsahedron06.position.set(-10,0,0);
+
+
+function setPosition3DElementsForVideos() {
+  
+  sphere01.position.set(0,40,0);
+  sphere02.position.set(0,0,40);
+  sphere03.position.set(0,0,-40);
+  sphere04.position.set(0,-40,0);
+  sphere05.position.set(40,0,0);
+  sphere06.position.set(-40,0,0);
+  torus01.position.set(-30,40,0);
+  torus02.position.set(-30,0,40);
+  torus03.position.set(-30,0,-40);
+  torus04.position.set(-30,-40,0);
+  torus05.position.set(10,0,0);
+  torus06.position.set(-70,0,0);
+  iconsahedron01.position.set(30,40,0);
+  iconsahedron02.position.set(30,0,40);
+  iconsahedron03.position.set(30,0,-40);
+  iconsahedron04.position.set(30,-40,0);
+  iconsahedron05.position.set(70,0,0);
+  iconsahedron06.position.set(-10,0,0);
+}
+
+setPosition3DElementsForVideos();
+
 
 // selected mesh and song
 let selectedMesh = lilteccaSphere;
@@ -212,12 +220,44 @@ let lilteccaAnimationRequest;
 function lilteccaAnimate() {
   lilteccaAnimationRequest = requestAnimationFrame(lilteccaAnimate);
 
-  sphere01.position.y += 0.05;
-  sphere02.position.z += 0.05;
-  sphere03.position.z -= 0.05;
-  sphere04.position.y -= 0.05;
-  sphere05.position.x += 0.05;
-  sphere06.position.x -= 0.05;
+  countAnimate++;
+  console.log(countAnimate);
+
+  if (countAnimate > 500) {
+    countAnimate = 0;
+  } else if (countAnimate > 250) {
+
+    sphere01.position.y -= 0.1;
+    sphere02.position.z -= 0.1;
+    sphere03.position.z += 0.1;
+    sphere04.position.y += 0.1;
+    sphere05.position.x -= 0.1;
+    sphere06.position.x += 0.1;
+
+    sphere01.rotation.y -= 0.1;
+    sphere02.rotation.y -= 0.1;
+    sphere03.rotation.y += 0.1;
+    sphere04.rotation.y += 0.1;
+    sphere05.rotation.y -= 0.1;
+    sphere06.rotation.y += 0.1;
+
+  } else {
+
+    sphere01.position.y += 0.1;
+    sphere02.position.z += 0.1;
+    sphere03.position.z -= 0.1;
+    sphere04.position.y -= 0.1;
+    sphere05.position.x += 0.1;
+    sphere06.position.x -= 0.1;
+
+    sphere01.rotation.y += 0.1;
+    sphere02.rotation.y += 0.1;
+    sphere03.rotation.y -= 0.1;
+    sphere04.rotation.y -= 0.1;
+    sphere05.rotation.y += 0.1;
+    sphere06.rotation.y -= 0.1;
+
+  }
 
   controls.update();
   renderer.render(scene, camera);
@@ -311,19 +351,90 @@ let travisAnimationRequest;
 function travisAnimate() {
   travisAnimationRequest = requestAnimationFrame(travisAnimate);
 
-  iconsahedron01.rotation.y += 0.05;
-  iconsahedron02.rotation.z += 0.05;
-  iconsahedron03.rotation.z -= 0.05;
-  iconsahedron04.rotation.y -= 0.05;
-  iconsahedron05.rotation.x += 0.05;
-  iconsahedron06.rotation.x -= 0.05;
+  countAnimate++;
 
-  iconsahedron01.position.y += 0.01;
-  iconsahedron02.position.z += 0.01;
-  iconsahedron03.position.z -= 0.01;
-  iconsahedron04.position.y -= 0.01;
-  iconsahedron05.position.x += 0.01;
-  iconsahedron06.position.x -= 0.01;
+  if (countAnimate > 200) {
+    countAnimate = 0;
+  } else if (countAnimate > 100) {
+
+    iconsahedron01.rotation.y += 0.1;
+    iconsahedron02.rotation.z += 0.1;
+    iconsahedron03.rotation.z -= 0.1;
+    iconsahedron04.rotation.y -= 0.1;
+    iconsahedron05.rotation.x += 0.1;
+    iconsahedron06.rotation.x -= 0.1;
+
+    iconsahedron01.position.y += 5;
+    iconsahedron02.position.z += 5;
+    iconsahedron03.position.z -= 5;
+    iconsahedron04.position.y -= 5;
+    iconsahedron05.position.x += 5;
+    iconsahedron06.position.x -= 5;
+
+    iconsahedron01.scale.x -= 0.05;
+    iconsahedron01.scale.z -= 0.05;
+    iconsahedron01.scale.y -= 0.05;
+    iconsahedron02.scale.x -= 0.05;
+    iconsahedron02.scale.z -= 0.05;
+    iconsahedron02.scale.y -= 0.05;
+    iconsahedron03.scale.x -= 0.05;
+    iconsahedron03.scale.z -= 0.05;
+    iconsahedron03.scale.y -= 0.05;
+    iconsahedron04.scale.x -= 0.05;
+    iconsahedron04.scale.z -= 0.05;
+    iconsahedron04.scale.y -= 0.05;
+    iconsahedron05.scale.x -= 0.05;
+    iconsahedron05.scale.z -= 0.05;
+    iconsahedron05.scale.y -= 0.05;
+    iconsahedron06.scale.x -= 0.05;
+    iconsahedron06.scale.z -= 0.05;
+    iconsahedron06.scale.y -= 0.05;
+
+  } else {
+
+    iconsahedron01.rotation.y += 0.1;
+    iconsahedron02.rotation.z += 0.1;
+    iconsahedron03.rotation.z -= 0.1;
+    iconsahedron04.rotation.y -= 0.1;
+    iconsahedron05.rotation.x += 0.1;
+    iconsahedron06.rotation.x -= 0.1;
+
+    /*iconsahedron01.rotation.y -= 0.5;
+    iconsahedron02.rotation.z -= 0.5;
+    iconsahedron03.rotation.z += 0.5;
+    iconsahedron04.rotation.y += 0.5;
+    iconsahedron05.rotation.x -= 0.5;
+    iconsahedron06.rotation.x += 0.5;*/
+
+    iconsahedron01.position.y -= 5;
+    iconsahedron02.position.z -= 5;
+    iconsahedron03.position.z += 5;
+    iconsahedron04.position.y += 5;
+    iconsahedron05.position.x -= 5;
+    iconsahedron06.position.x += 5;
+
+    iconsahedron01.scale.x += 0.05;
+    iconsahedron01.scale.z += 0.05;
+    iconsahedron01.scale.y += 0.05;
+    iconsahedron02.scale.x += 0.05;
+    iconsahedron02.scale.z += 0.05;
+    iconsahedron02.scale.y += 0.05;
+    iconsahedron03.scale.x += 0.05;
+    iconsahedron03.scale.z += 0.05;
+    iconsahedron03.scale.y += 0.05;
+    iconsahedron04.scale.x += 0.05;
+    iconsahedron04.scale.z += 0.05;
+    iconsahedron04.scale.y += 0.05;
+    iconsahedron05.scale.x += 0.05;
+    iconsahedron05.scale.z += 0.05;
+    iconsahedron05.scale.y += 0.05;
+    iconsahedron06.scale.x += 0.05;
+    iconsahedron06.scale.z += 0.05;
+    iconsahedron06.scale.y += 0.05;
+
+  }
+
+  
 
   controls.update();
   renderer.render(scene, camera);
@@ -336,6 +447,9 @@ const nextVideoButton = document.getElementById("nextVideoButton");
 
 // reset all videos and scene
 resetButton.addEventListener("click", function() {
+  isPlaying = false;
+  playButton.innerHTML = "play";
+  setPosition3DElementsForVideos();
   resetScene();
   cancelAnimationFunctions();
   lilteccaVideo.load();
@@ -380,6 +494,7 @@ function cancelAnimationFunctions () {
   cancelAnimationFrame(lilteccaAnimationRequest);
   cancelAnimationFrame(travisAnimationRequest);
   cancelAnimationFrame(yeatAnimationRequest);
+  countAnimate = 0;
 }
 
 // reset scene
@@ -400,6 +515,7 @@ function playOrStopVideo() {
     lilteccaVideo.pause();
     yeatVideo.pause();
     travisVideo.pause();
+    cancelAnimationFunctions();
     isPlaying = false;
     playButton.innerHTML = "play";
   } else {
