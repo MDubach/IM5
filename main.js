@@ -22,9 +22,11 @@ renderer.render(scene, camera);
 
 // add light and grid helper to scene
 const ambientLight = new THREE.AmbientLight(0xffffff);
-// const gridHelper = new THREE.GridHelper(200,50);
-// scene.add(ambientLight, gridHelper);
 scene.add(ambientLight);
+
+// add gridHelper if needed
+// const gridHelper = new THREE.GridHelper(200,50);
+// scene.add(gridHelper);
 
 // Orbitcontrols for movement
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -90,7 +92,6 @@ const iconsahedron06 = new THREE.Mesh(travisGeometry, travisMaterial);
 
 
 function setPosition3DElementsForVideos() {
-  
   sphere01.position.set(0,40,0);
   sphere02.position.set(0,0,40);
   sphere03.position.set(0,0,-40);
@@ -113,7 +114,6 @@ function setPosition3DElementsForVideos() {
 
 setPosition3DElementsForVideos();
 
-
 // selected mesh and song
 let selectedMesh = lilteccaSphere;
 
@@ -123,16 +123,16 @@ let isPlaying = false;
 // add sphere to scene
 function addSphere() {
     const geometry = new THREE.SphereGeometry(0.2, 24, 24);
-    const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-    const star = new THREE.Mesh( geometry, material );
+    const material = new THREE.MeshStandardMaterial({ color: 'red' });
+    const sphere = new THREE.Mesh( geometry, material );
 
     const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
 
-    star.position.set(x,y,z);
-    scene.add(star);
+    sphere.position.set(x,y,z);
+    scene.add(sphere);
 }
 
-// add 200 spheres to scene
+// add 200 spheres to scene => example how to add a lot of objects to scene
 Array(200).fill().forEach(addSphere);
 
 // spacebar pause and play
@@ -149,24 +149,17 @@ document.body.onkeyup = function(e) {
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-// onMouseClick Event
+// onMouseClick Event => function is not used.
 function onMouseClick(event) {
-  // Calculate mouse position in normalized device coordinates
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-  // Set the ray direction and origin based on the mouse position
   raycaster.setFromCamera(mouse, camera);
-
-  // Create an array of the meshes you want to check for intersections
   const meshes = [lilteccaSphere, yeatTorus, travisIcosahedron];
-
-  // Check for intersections with each mesh
   const intersects = raycaster.intersectObjects(meshes);
 
   if (intersects.length > 0) {
     const clickedMesh = intersects[0].object;
-    // could add function to change stuff on website based onmouseclickevent.
+    // could add function to change stuff on website based on mouse click event.
     console.log(`Mesh clicked: ${clickedMesh.name}`);
   }
 }
@@ -213,7 +206,7 @@ function animate() {
 
 animate();
 
-
+// animation for 3d elements
 let countAnimate = 0;
 
 let lilteccaAnimationRequest;
@@ -399,13 +392,6 @@ function travisAnimate() {
     iconsahedron05.rotation.x += 0.1;
     iconsahedron06.rotation.x -= 0.1;
 
-    /*iconsahedron01.rotation.y -= 0.5;
-    iconsahedron02.rotation.z -= 0.5;
-    iconsahedron03.rotation.z += 0.5;
-    iconsahedron04.rotation.y += 0.5;
-    iconsahedron05.rotation.x -= 0.5;
-    iconsahedron06.rotation.x += 0.5;*/
-
     iconsahedron01.position.y -= 5;
     iconsahedron02.position.z -= 5;
     iconsahedron03.position.z += 5;
@@ -431,10 +417,7 @@ function travisAnimate() {
     iconsahedron06.scale.x += 0.05;
     iconsahedron06.scale.z += 0.05;
     iconsahedron06.scale.y += 0.05;
-
   }
-
-  
 
   controls.update();
   renderer.render(scene, camera);
