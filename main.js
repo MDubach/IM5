@@ -159,7 +159,7 @@ function onMouseClick(event) {
 
   if (intersects.length > 0) {
     const clickedMesh = intersects[0].object;
-    // could add function to change stuff on website based on mouse click event.
+    // add function based on click event
     console.log(`Mesh clicked: ${clickedMesh.name}`);
   }
 }
@@ -214,7 +214,6 @@ function lilteccaAnimate() {
   lilteccaAnimationRequest = requestAnimationFrame(lilteccaAnimate);
 
   countAnimate++;
-  console.log(countAnimate);
 
   if (countAnimate > 500) {
     countAnimate = 0;
@@ -261,7 +260,6 @@ function yeatAnimate() {
   yeatAnimationRequest = requestAnimationFrame(yeatAnimate);
 
   countAnimate ++;
-  console.log(countAnimate);
 
   if(countAnimate > 1000) {
     countAnimate = 0;
