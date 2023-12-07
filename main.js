@@ -25,7 +25,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(ambientLight);
 
 // add gridHelper if needed
-// const gridHelper = new THREE.GridHelper(200,50);
+// const gridHelper = new THREE.GridHelper(200,200);
 // scene.add(gridHelper);
 
 // Orbitcontrols for movement
